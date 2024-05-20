@@ -14,7 +14,7 @@ const person2 = {
 }
 
 
-Function.prototype.myBind = function (context) {
+Function.prototype.myBind = function (context, ...args) {
     // check if it is called on function
     if (typeof this !== 'function') {
         throw new Error("it must be called on the function");
@@ -22,11 +22,11 @@ Function.prototype.myBind = function (context) {
 
     // Attach a new key to the new object.
     context.newFn = this;
-    return function (...args) {
-        return context.newFn(...args);
+    return function (...newArgs) {
+        return context.newFn(...args, ...newArgs);
     }
 }
 
 
-const person2PrintFn = person1.printNameAndAge.myBind(person2);
+const person2PrintFn = person1.printNameAndAge.myBind(person2, "delhi");
 person2PrintFn("Gotham");
